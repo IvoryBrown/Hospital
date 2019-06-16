@@ -3,6 +3,10 @@ package application.login.controller;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import application.login.database.LoginDB;
+import application.login.pojo.Login;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.PasswordField;
@@ -16,16 +20,18 @@ public class LoginController implements Initializable {
 	private PasswordField passwordTxt; // password
 	@FXML
 	private AnchorPane loginPage;// login page true/false
+	private final ObservableList<Login> dataLogin = FXCollections.observableArrayList(); // arraylist login
+	private LoginDB loginDB = new LoginDB();
 
 	// check textfield not null
 	private boolean checkField() {
 		if (userNameTxt.getText().trim().isEmpty()) {
-			userNameTxt.setStyle(" -fx-text-box-border: #CD5C5C; -fx-focus-color: #CD5C5C;");
+			userNameTxt.setStyle(" -fx-text-box-border: #FF1493; -fx-focus-color: #FF1493;");
 		} else {
 			userNameTxt.setStyle(null);
 		}
 		if (passwordTxt.getText().trim().isEmpty()) {
-			passwordTxt.setStyle(" -fx-text-box-border: #CD5C5C; -fx-focus-color: #CD5C5C;");
+			passwordTxt.setStyle(" -fx-text-box-border: #FF1493; -fx-focus-color: #FF1493;");
 		} else {
 			passwordTxt.setStyle(null);
 		}
@@ -37,11 +43,27 @@ public class LoginController implements Initializable {
 
 	}
 
+	private ObservableList<Login> loginData() {
+		dataLogin.clear();
+		dataLogin.addAll(loginDB.getAllUserLogin(userNameTxt.getText()));
+		return dataLogin;
+
+	}
+
 	// Login app
 	@FXML
 	private void loginBtn() {
 		if (checkField()) {
-			loginPage.setVisible(false);
+			// Database to array
+			loginData();
+			if (dataLogin.get(0).getUserName().equals(userNameTxt.getText())
+					&& dataLogin.get(0).getPassword().equals(passwordTxt.getText())) {
+				loginPage.setVisible(false);
+
+			} else {
+				passwordTxt.setStyle(" -fx-text-box-border: #FF1493; -fx-focus-color: #FF1493;");
+				userNameTxt.setStyle(" -fx-text-box-border: #FF1493; -fx-focus-color: #FF1493;");
+			}
 		}
 	}
 

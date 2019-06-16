@@ -1,5 +1,6 @@
 package application.login.main;
 	
+import application.setting.file.FolderWriter;
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
@@ -12,6 +13,7 @@ import javafx.stage.Stage;
 public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) {
+		new FolderWriter();
 		try {
 			AnchorPane root = (AnchorPane)FXMLLoader.load(getClass().getResource("/application/login/view/Login.fxml"));
 			primaryStage.setWidth(1600);
