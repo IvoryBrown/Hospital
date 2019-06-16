@@ -1,0 +1,11 @@
+.anchor {
+    -fx-background-image:url('login.jpg');
+    -fx-background-size: 2000px 1200px;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+}
+
+.text-field {
+    -fx-font-size: 12pt;
+    -fx-font-family: "Segoe UI Semibold";
+}
