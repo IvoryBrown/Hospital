@@ -11,6 +11,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.AnchorPane;
 
 public class LoginController implements Initializable {
@@ -26,12 +27,12 @@ public class LoginController implements Initializable {
 	// check textfield not null
 	private boolean checkField() {
 		if (userNameTxt.getText().trim().isEmpty()) {
-			userNameTxt.setStyle(" -fx-text-box-border: #FF1493; -fx-focus-color: #FF1493;");
+			userNameTxt.setStyle(" -fx-border-color: #e62200; -fx-focus-color: #e62200;");
 		} else {
 			userNameTxt.setStyle(null);
 		}
 		if (passwordTxt.getText().trim().isEmpty()) {
-			passwordTxt.setStyle(" -fx-text-box-border: #FF1493; -fx-focus-color: #FF1493;");
+			passwordTxt.setStyle(" -fx-border-color: #e62200; -fx-focus-color: #e62200;");
 		} else {
 			passwordTxt.setStyle(null);
 		}
@@ -43,6 +44,7 @@ public class LoginController implements Initializable {
 
 	}
 
+	// arraylist database text username
 	private ObservableList<Login> loginData() {
 		dataLogin.clear();
 		dataLogin.addAll(loginDB.getAllUserLogin(userNameTxt.getText()));
@@ -50,9 +52,14 @@ public class LoginController implements Initializable {
 
 	}
 
-	// Login app
+	// Login app button
 	@FXML
 	private void loginBtn() {
+		login();
+	}
+
+	// Login app
+	private void login() {
 		if (checkField()) {
 			// Database to array
 			loginData();
@@ -61,8 +68,8 @@ public class LoginController implements Initializable {
 				loginPage.setVisible(false);
 
 			} else {
-				passwordTxt.setStyle(" -fx-text-box-border: #FF1493; -fx-focus-color: #FF1493;");
-				userNameTxt.setStyle(" -fx-text-box-border: #FF1493; -fx-focus-color: #FF1493;");
+				passwordTxt.setStyle(" -fx-border-color: #e62200; -fx-focus-color: #e62200;");
+				userNameTxt.setStyle(" -fx-border-color: #e62200; -fx-focus-color: #e62200;");
 			}
 		}
 	}
@@ -76,8 +83,18 @@ public class LoginController implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		// TODO Automatikusan előállított metóduscsonk
-
+		// Textfield enter
+		userNameTxt.setOnKeyReleased(event -> {
+			if (event.getCode() == KeyCode.ENTER) {
+				login();
+			}
+		});
+		// Textfield enter
+		passwordTxt.setOnKeyReleased(event -> {
+			if (event.getCode() == KeyCode.ENTER) {
+				login();
+			}
+		});
 	}
 
 }
